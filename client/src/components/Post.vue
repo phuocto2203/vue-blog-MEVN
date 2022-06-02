@@ -21,7 +21,7 @@
           <img
             v-if="!post.image"
             class="post__img"
-            src="src/assets/images/no-image.jpg"
+            src="../assets/images/no-image.jpg"
           />
 
           <div
