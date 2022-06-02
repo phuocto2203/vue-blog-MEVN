@@ -7,7 +7,7 @@ const authRoute = require("./routers/auth");
 const postRoute = require("./routers/post");
 
 const PORT = process.env.PORT || 5000;
-const DATABASE = process.env.DATABASE;
+const DATABASE = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.rboih.mongodb.net/BLOGDATABASE?retryWrites=true&w=majority`;
 
 const app = express();
 app.use(cors());
@@ -18,6 +18,7 @@ app.use(express.json());
 const connectDB = async () => {
   try {
     await mongoose.connect(DATABASE);
+
   } catch (error) {
     return error;
   }
