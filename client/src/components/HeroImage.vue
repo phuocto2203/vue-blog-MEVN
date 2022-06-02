@@ -43,10 +43,23 @@ export default {
   setup() {
     let images = reactive([]);
     images = [
-      { category: "LIFE STYLE", source: "/src/assets/images/lifestyle.jpg" },
-      { category: "MUSIC", source: "/src/assets/images/music.jpg" },
-      { category: "TRAVEL", source: "/src/assets/images/travel.jpg" },
-      { category: "TECHNOLOGY", source: "/src/assets/images/technology.jpg" },
+      {
+        category: "LIFE STYLE",
+        source: new URL("../assets/images/lifestyle.jpg", import.meta.url).href,
+      },
+      {
+        category: "MUSIC",
+        source: new URL("../assets/images/music.jpg", import.meta.url).href,
+      },
+      {
+        category: "TRAVEL",
+        source: new URL("../assets/images/travel.jpg", import.meta.url).href,
+      },
+      {
+        category: "TECHNOLOGY",
+        source: new URL("../assets/images/technology.jpg", import.meta.url)
+          .href,
+      },
     ];
 
     return {
