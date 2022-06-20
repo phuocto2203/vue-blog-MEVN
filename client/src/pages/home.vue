@@ -13,6 +13,9 @@
     </div>
   </div>
   <div class="post__wrapper">
+    <div v-if="isFetching" class="posts__container">
+      <skeleton-loader v-for="skeletonLoader in 6"></skeleton-loader>
+    </div>
     <div v-if="!isFetching" class="posts__container" :key="rerenderTimes">
       <div v-for="(post, index) in posts" :key="index">
         <post v-if="post" :postProps="post"></post>
@@ -30,15 +33,16 @@
 
 <script>
 import postApi from "../api/postApi";
+import SkeletonLoader from "../components/SkeletonLoader.vue";
 import HeroImage from "../components/HeroImage.vue";
 import Post from "../components/Post.vue";
 import NavBar from "../components/NavBar.vue";
 import Pagination from "../components/Pagination.vue";
-import { reactive, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 export default {
-  components: { HeroImage, Post, NavBar, Pagination },
+  components: { HeroImage, Post, NavBar, Pagination, SkeletonLoader },
   setup() {
     //vue router
     const router = useRouter();
@@ -80,7 +84,7 @@ export default {
         title: route.query?.title || null,
       };
 
-      (params);
+      params;
       try {
         const response = await postApi.getAllPosts({ params });
         totalPages.value = response?.totalPages || 1;

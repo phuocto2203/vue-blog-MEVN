@@ -78,6 +78,10 @@ export default {
   object-fit: cover;
   opacity: 0.75;
   position: relative;
+
+  @include mobile {
+    height: 350px;
+  }
 }
 
 .text {

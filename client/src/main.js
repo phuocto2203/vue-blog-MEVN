@@ -4,6 +4,7 @@ import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
 import router from "./routers/index";
 import store from "./vuex/store";
+import "vue-skeletor/dist/vue-skeletor.css";
 
 import "./styles/reset.scss";
 
