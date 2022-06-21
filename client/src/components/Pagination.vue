@@ -12,7 +12,6 @@ export default {
 
     const length = ref(props.totalPages);
 
-
     return { page, length };
   },
 };

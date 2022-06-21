@@ -77,6 +77,7 @@ export default {
 
     //get all posts with pagination
     const getPosts = async () => {
+      isFetching.value = true;
       const params = {
         page: currentPage.value,
         limit: limitPost.value,
@@ -84,7 +85,6 @@ export default {
         title: route.query?.title || null,
       };
 
-      params;
       try {
         const response = await postApi.getAllPosts({ params });
         totalPages.value = response?.totalPages || 1;
