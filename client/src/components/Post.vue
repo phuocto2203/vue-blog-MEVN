@@ -65,7 +65,7 @@
           {{ post.time }}
         </v-card-subtitle>
         <v-card-text>
-          {{ truncate(post?.description || "", 300) }}
+          {{ truncate(post?.description, 300) }}
         </v-card-text>
       </v-card>
     </router-link>
@@ -75,6 +75,7 @@
 <script>
 import { reactive, ref } from "vue";
 import { truncate } from "../utils/truncate";
+import { convertStringToHTML } from "../utils/convertStringToHTML";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 export default {
@@ -112,6 +113,7 @@ export default {
     return {
       isHover,
       truncate,
+      convertStringToHTML,
       post,
       handleDeletePost,
       handleEditPost,

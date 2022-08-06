@@ -23,9 +23,7 @@
         />
       </div>
 
-      <p class="post-detail__text">
-        {{ postDetail.description }}
-      </p>
+      <div class="post-detail__text" v-html="postDetail.description"></div>
     </div>
   </div>
 </template>
@@ -54,7 +52,7 @@ export default {
           ...postDetail.value,
           updatedAt: new Date(postDetail.value.updatedAt),
         }),
-          (postDetail.value);
+          postDetail.value;
         isLoading.value = false;
       } catch (error) {
         return;

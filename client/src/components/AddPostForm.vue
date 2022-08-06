@@ -66,13 +66,20 @@
       </div>
 
       <label class="add-post__label" for="description">Description</label>
-
-      <textarea
-        v-model="state.description"
-        class="add-post__textarea"
-        :class="v$.category.$error ? 'reset-margin' : ''"
-        name="description"
-      ></textarea>
+      <div class="add-post__textarea">
+        <QuillEditor
+          v-model:content="state.description"
+          contentType="html"
+          :class="v$.category.$error ? 'reset-margin' : ''"
+          name="description"
+        ></QuillEditor>
+        <!-- <textarea
+          v-model="state.description"
+          contentType="text"
+          :class="v$.category.$error ? 'reset-margin' : ''"
+          name="description"
+        ></textarea> -->
+      </div>
       <div
         class="add-post__input-errors"
         v-for="error of v$.description.$errors"
@@ -94,13 +101,18 @@
 </template>
 
 <script>
-import { computed, reactive } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { useRoute } from "vue-router";
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 export default {
   props: ["oldPostProps"],
+  components: {
+    QuillEditor,
+  },
   setup(props, context) {
     const route = useRoute();
 
@@ -136,6 +148,8 @@ export default {
       const form = document.getElementById("form");
 
       const formData = new FormData(form);
+
+      formData.append('description', state.description);
 
       if (route.name === "add-post-route") {
         context.emit("submit-post", formData);
@@ -198,11 +212,9 @@ export default {
   }
   &__textarea {
     width: 100%;
-    border-radius: 4px;
-    border: solid 0.5px gray;
     resize: none;
     height: 200px;
-    margin-bottom: 30px;
+    margin-bottom: 70px;
     padding: 5px;
   }
   &__input-errors {

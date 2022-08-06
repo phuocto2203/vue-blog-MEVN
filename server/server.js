@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const formidableMiddleware = require("express-formidable");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const authRoute = require("./routers/auth");
@@ -18,7 +17,6 @@ app.use(express.json());
 const connectDB = async () => {
   try {
     await mongoose.connect(DATABASE);
-
   } catch (error) {
     return error;
   }
