@@ -72,13 +72,8 @@
           contentType="html"
           :class="v$.category.$error ? 'reset-margin' : ''"
           name="description"
+          toolbar="essential"
         ></QuillEditor>
-        <!-- <textarea
-          v-model="state.description"
-          contentType="text"
-          :class="v$.category.$error ? 'reset-margin' : ''"
-          name="description"
-        ></textarea> -->
       </div>
       <div
         class="add-post__input-errors"
@@ -101,7 +96,7 @@
 </template>
 
 <script>
-import { computed, reactive, ref, watch } from "vue";
+import { computed, reactive } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { useRoute } from "vue-router";
@@ -149,7 +144,7 @@ export default {
 
       const formData = new FormData(form);
 
-      formData.append('description', state.description);
+      formData.append("description", state.description);
 
       if (route.name === "add-post-route") {
         context.emit("submit-post", formData);
@@ -166,6 +161,7 @@ export default {
 
 <style lang="scss" scoped>
 @use "../scss/" as *;
+
 .add-post {
   &__container {
     width: 1000px;
@@ -216,6 +212,9 @@ export default {
     height: 200px;
     margin-bottom: 70px;
     padding: 5px;
+    @media screen and (max-width: 610px) {
+      margin-bottom: 110px;
+    }
   }
   &__input-errors {
     color: red;
