@@ -38,9 +38,10 @@ import HeroImage from "../components/HeroImage.vue";
 import Post from "../components/Post.vue";
 import NavBar from "../components/NavBar.vue";
 import Pagination from "../components/Pagination.vue";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
+
 export default {
   components: { HeroImage, Post, NavBar, Pagination, SkeletonLoader },
   setup() {
@@ -54,8 +55,8 @@ export default {
     const chipFilters = ref([]);
     const rerenderTimes = ref(0);
     const isFetching = ref(true);
-    const currentPage = ref(Number(route.query.page) || 1);
-    const limitPost = ref(Number(route.query.limit) || 6);
+    const currentPage = ref(Number(route.query?.page) || 1);
+    const limitPost = ref(Number(route.query?.limit) || 6);
 
     const totalPages = ref();
 
@@ -99,13 +100,33 @@ export default {
 
     getPosts();
 
-    watch([currentPage, limitPost, () => route.query], () => {
-      getPosts();
-      chipFilters.value = [
-        ...store.state.filterModule.categories,
-        store.state.filterModule.title,
-      ];
-    });
+    //call api when any filters are changed
+    watch(
+      [
+        currentPage,
+        limitPost,
+        () => route.query?.title,
+        () => route.query?.category,
+      ],
+      () => {
+        getPosts();
+        chipFilters.value = [
+          ...store.state.filterModule.categories,
+          store.state.filterModule.title,
+        ];
+      }
+    );
+
+    //back to the first page when title filter or categories filter is changed
+    watch(
+      [
+        computed(() => store.state.filterModule.title),
+        computed(() => store.state.filterModule.categories),
+      ],
+      () => {
+        currentPage.value = 1;
+      }
+    );
 
     return {
       rerenderTimes,
